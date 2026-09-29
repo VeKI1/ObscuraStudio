@@ -359,7 +359,7 @@ input,textarea,button{font:inherit}
             <sc-if value="{{ errType }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:#a3345a">Izaberite vrstu fotografisanja.</span></sc-if>
           </fieldset>
           <label style="display:flex;flex-direction:column;gap:6px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#4a3b62">Poruka
-            <textarea name="message" rows="4" value="{{ form.msg }}" onChange="{{ setMsg }}" placeholder="Lokacija, broj ljudi, atmosfera koju zamišljate…" style="width:100%;font-size:17px;letter-spacing:0;text-transform:none;padding:12px 0;border:none;border-bottom:1px solid rgba(45,35,64,0.35);border-radius:0;background:transparent;color:#2d2340;outline:none;resize:vertical;line-height:1.6" style-focus="border-bottom-color:#7a5f9e"></textarea>
+            <textarea name="message" rows="1" value="{{ form.msg }}" onChange="{{ setMsg }}" placeholder="Lokacija, broj ljudi, atmosfera koju zamišljate…" style="width:100%;font-size:17px;letter-spacing:0;text-transform:none;padding:12px 0;border:none;border-bottom:1px solid rgba(45,35,64,0.35);border-radius:0;background:transparent;color:#2d2340;outline:none;resize:vertical;line-height:1.5;min-height:0;field-sizing:content" style-focus="border-bottom-color:#7a5f9e"></textarea>
           </label>
           <div style="display:flex;flex-direction:column;gap:12px">
             <button type="submit" style="display:flex;justify-content:space-between;align-items:center;padding:19px 24px;background:#2d2340;border:none;color:#f6f2ee;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:background .3s" style-hover="background:#7a5f9e">Pošalji upit <span>→</span></button>
