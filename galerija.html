@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>addEventListener('load',function(){if(!location.hash)return;var t=0,iv=setInterval(function(){var el=document.getElementById(decodeURIComponent(location.hash.slice(1)));if(el||++t>50){clearInterval(iv);if(el)scrollTo({top:el.getBoundingClientRect().top+scrollY-70});}},100);});</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Obscura studio</title>
+<meta name="description" content="Galerija fotografija studija Obscura: portreti, priroda, putovanja i događaji. Pogledajte radove i zakažite svoje fotografisanje.">
+<link rel="icon" type="image/png" href="images/suncokret-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Caveat:wght@400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#f6f2ee;color:#2d2340;-webkit-font-smoothing:antialiased}
+a{color:#2d2340;text-decoration:none}
+a:hover{color:#7a5f9e}
+*{box-sizing:border-box}
+button{font:inherit}
+::selection{background:#ddd0ea}
+</style>
+</helmet>
+
+<div style="font-family:'Jost',sans-serif;background:#f6f2ee;color:#2d2340;min-height:100vh;overflow-x:clip">
+
+<header style="position:sticky;top:0;z-index:30;background:rgba(222,212,234,0.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(45,35,64,0.08)">
+  <div style="padding:12px clamp(20px,5vw,64px);display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="index.html" aria-label="Obscura — početna" style="display:flex;flex-direction:column;gap:2px">
+      <span style="display:flex;align-items:center;gap:6px;font-family:'Cormorant Garamond',serif;font-size:32px;letter-spacing:0.08em;line-height:1;font-weight:500">OBSCURA<img src="images/suncokret-logo.png" alt="" style="width:28px;height:28px;margin-top:-10px;margin-left:-2px"></span>
+      <span style="font-size:10px;letter-spacing:0.18em;color:#5b4d70">photography · stories · places · people</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:clamp(16px,3vw,32px)">
+      <a href="index.html#radovi" style="display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase">← <span>Nazad na sajt</span></a>
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+        <a href="index.html#rezervacija" style="display:flex;align-items:center;gap:10px;padding:13px 22px;background:#2d2340;color:#f6f2ee;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;transition:background .3s" style-hover="background:#7a5f9e;color:#f6f2ee">Zakaži termin <span>→</span></a>
+      </sc-if>
+    </div>
+  </div>
+</header>
+
+<main>
+<section data-screen-label="01 Kategorija" style="position:relative;min-height:clamp(380px,54vh,540px);display:flex;align-items:flex-end;overflow:hidden;background:#2d2340">
+  <img src="{{ cat.cover }}" alt="{{ cat.coverAlt }}" fetchpriority="high" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ cat.coverPos }};transition:opacity .5s ease">
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(38,26,48,0.15) 0%,rgba(38,26,48,0.8) 100%)"></div>
+  <div style="position:relative;width:100%;padding:clamp(48px,7vw,88px) clamp(20px,5vw,64px);color:#fbf7f2;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px 64px">
+    <div style="display:flex;flex-direction:column;gap:18px;max-width:760px">
+      <span style="display:flex;align-items:center;gap:14px;font-size:12px;letter-spacing:0.26em;text-transform:uppercase"><span style="width:36px;height:1px;background:#fbf7f2"></span>Galerija · {{ cat.num }}</span>
+      <h1 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(56px,10vw,128px);line-height:0.92;letter-spacing:0.02em">{{ cat.title }}</h1>
+      <span style="font-size:clamp(12px,1.3vw,15px);letter-spacing:0.22em;text-transform:uppercase;font-weight:300">{{ cat.sub }}</span>
+    </div>
+    <p style="margin:0;max-width:400px;font-size:16px;line-height:1.7;color:#ece4f2;text-wrap:pretty">{{ cat.intro }}</p>
+  </div>
+</section>
+
+<nav aria-label="Kategorije" style="position:sticky;top:69px;z-index:20;background:#f6f2ee;border-bottom:1px solid rgba(45,35,64,0.12)">
+  <div style="padding:0 clamp(20px,5vw,64px);display:flex;gap:clamp(20px,4vw,48px);overflow-x:auto">
+    <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+      <a href="{{ t.href }}" onClick="{{ t.go }}" aria-current="{{ t.current }}" style="flex:none;display:flex;align-items:baseline;gap:10px;padding:22px 0 18px;border-bottom:2px solid {{ t.line }};color:{{ t.color }};font-size:13px;letter-spacing:0.16em;text-transform:uppercase;transition:color .3s, border-color .3s">
+        <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;letter-spacing:0;text-transform:none">{{ t.num }}</span>{{ t.title }}<span style="font-size:11px;color:#5b4d70;letter-spacing:0.08em">({{ t.count }})</span>
+      </a>
+    </sc-for>
+  </div>
+</nav>
+
+<section data-screen-label="02 Fotografije" style="padding:clamp(40px,6vw,72px) clamp(20px,5vw,64px) clamp(56px,8vw,96px)">
+  <h2 style="position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0)">Fotografije — {{ cat.title }}</h2>
+  <div style="display:grid;grid-template-columns:{{ cols }};gap:clamp(10px,1.4vw,18px)">
+    <sc-for list="{{ photos }}" as="p" hint-placeholder-count="8">
+      <button type="button" onClick="{{ p.open }}" aria-label="Uvećaj: {{ p.alt }}" style="display:block;width:100%;aspect-ratio:4/5;margin:0;padding:0;border:none;background:#e4dcd6;cursor:zoom-in;overflow:hidden">
+        <img src="{{ p.src }}" alt="{{ p.alt }}" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover;object-position:{{ p.pos }};transition:transform 1.1s cubic-bezier(.2,.7,.2,1), opacity .4s" style-hover="transform:scale(1.04)">
+      </button>
+    </sc-for>
+  </div>
+  <sc-if value="{{ showNote }}" hint-placeholder-val="{{ true }}">
+    <p style="margin:clamp(24px,4vw,40px) 0 0;text-align:center;font-family:'Caveat',cursive;font-size:32px;color:#4a3b62;transform:rotate(-2deg)">{{ cat.note }}</p>
+  </sc-if>
+</section>
+
+<section data-screen-label="03 Dalje" style="display:flex;flex-wrap:wrap;background:#2d2340;color:#f6f2ee">
+  <a href="{{ next.href }}" onClick="{{ next.go }}" style="flex:1 1 420px;position:relative;min-height:clamp(260px,32vw,380px);display:flex;align-items:flex-end;overflow:hidden;color:#fbf7f2">
+    <img src="{{ next.cover }}" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ next.coverPos }};transition:transform 1.2s cubic-bezier(.2,.7,.2,1)" style-hover="transform:scale(1.05)">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(38,26,48,0.1) 0%,rgba(38,26,48,0.78) 100%);pointer-events:none"></div>
+    <div style="position:relative;padding:clamp(28px,4vw,52px) clamp(20px,5vw,64px);display:flex;flex-direction:column;gap:12px;pointer-events:none">
+      <span style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase">Sledeća galerija · {{ next.num }}</span>
+      <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(40px,5vw,68px);line-height:1;color:#fbf7f2">{{ next.title }} →</h2>
+    </div>
+  </a>
+  <div style="flex:1 1 380px;padding:clamp(40px,6vw,72px) clamp(20px,5vw,64px);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:22px">
+    <span style="font-size:12px;letter-spacing:0.24em;text-transform:uppercase;color:#cbb8e6">Sviđa vam se?</span>
+    <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,4vw,54px);line-height:1.05;color:#f6f2ee">Hajde da napravimo <em style="font-style:italic;color:#cbb8e6">vašu priču</em></h2>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:6px">
+      <a href="index.html#rezervacija" style="display:inline-flex;align-items:center;gap:14px;padding:17px 28px;background:#f6f2ee;color:#2d2340;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;transition:background .3s" style-hover="background:#ddd0ea;color:#2d2340">Zakaži termin <span>→</span></a>
+      <a href="index.html#usluge" style="display:inline-flex;align-items:center;gap:14px;padding:17px 28px;border:1px solid rgba(246,242,238,0.6);color:#f6f2ee;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;transition:background .3s" style-hover="background:rgba(246,242,238,0.1);color:#f6f2ee">Paketi i cene</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer style="background:#d6c8e4">
+  <div style="padding:28px clamp(20px,5vw,64px);display:flex;justify-content:space-between;align-items:center;gap:16px 32px;flex-wrap:wrap">
+    <span style="font-size:12px;color:#4f4164">© 2026 OBSCURA.</span>
+    <div style="display:flex;gap:22px;flex-wrap:wrap;font-size:11px;letter-spacing:0.14em;text-transform:uppercase">
+      <a href="index.html">Početna</a>
+      <a href="index.html#usluge">Usluge</a>
+      <a href="index.html#faq">Pitanja</a>
+      <a href="https://instagram.com/obscura.studioo" target="_blank" rel="noopener">Instagram</a>
+    </div>
+    <span style="font-family:'Caveat',cursive;font-size:24px;color:#4a3b62">Vidimo se u sledećoj priči…</span>
+  </div>
+</footer>
+
+<sc-if value="{{ lbOpen }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-modal="true" aria-label="Uvećana fotografija" onClick="{{ close }}" style="position:fixed;inset:0;z-index:50;background:rgba(30,22,40,0.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:clamp(12px,4vw,48px) clamp(12px,7vw,96px);cursor:zoom-out">
+    <img src="{{ lb.src }}" alt="{{ lb.alt }}" style="max-width:100%;max-height:calc(100% - 48px);object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,0.5);border:8px solid #fdfbf8">
+    <span style="color:#ddd0ea;font-size:13px;letter-spacing:0.16em">{{ lb.pos }}</span>
+    <button type="button" onClick="{{ prev }}" aria-label="Prethodna fotografija" style="position:absolute;left:clamp(8px,2vw,28px);top:50%;margin-top:-26px;width:52px;height:52px;border-radius:50%;border:1px solid rgba(246,242,238,0.45);background:rgba(45,35,64,0.5);color:#f6f2ee;font-size:18px;cursor:pointer" style-hover="background:#f6f2ee;color:#2d2340">←</button>
+    <button type="button" onClick="{{ nextImg }}" aria-label="Sledeća fotografija" style="position:absolute;right:clamp(8px,2vw,28px);top:50%;margin-top:-26px;width:52px;height:52px;border-radius:50%;border:1px solid rgba(246,242,238,0.45);background:rgba(45,35,64,0.5);color:#f6f2ee;font-size:18px;cursor:pointer" style-hover="background:#f6f2ee;color:#2d2340">→</button>
+    <button type="button" onClick="{{ close }}" aria-label="Zatvori" style="position:absolute;top:clamp(10px,2vw,24px);right:clamp(10px,2vw,28px);width:44px;height:44px;border:none;background:none;color:#f6f2ee;font-size:30px;font-weight:300;cursor:pointer">×</button>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showNotes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Stil&quot;}}">
+const CATS = {
+  ljudi: {
+    num: '01', title: 'Ljudi', sub: 'Portreti & emocije', cover: 'ljudi-portret', coverPos: '50% 30%',
+    intro: 'Portreti bez ukočenog poziranja. Pogledi, osmesi i tišine koje govore više od reči.',
+    note: 'Svako lice nosi svoju priču. ♡',
+    photos: [
+      ['ljudi-portret', 'Portret devojke u visokoj travi'], ['p-portret', 'Crno-beli studijski portret devojke sa crvenim karminom'],
+      ['p-stepenice', 'Devojka leži na kamenim stepenicama sa opalim lišćem'], ['lj-knjiga', 'Devojka čita knjigu naslonjena na stablo u zlatnom svetlu'],
+      ['lj-cvece', 'Devojka u beloj bluzi drži buket poljskog cveća iza leđa'], ['lj-studio', 'Crno-beli studijski portret devojke u crnom sakou'],
+      ['lj-plavo', 'Portret devojke sa naočarima u plavom svetlu'], ['lj-par', 'Nasmejani par sedi u travi na zalasku sunca'], ['lj-stepenice-kaput', 'Devojka u bež kaputu sedi na mermernim stepenicama sa torbom'],
+      ['p-telefon', 'Portret devojke sa telefonom'], ['osmeh', 'Nasmejano društvo aplaudira u bašti kafića'],
+      ['lj-tetovaze', 'Devojka sa tetovažama i naočarima čuči ispred betonskog zida', '50% 35%'],
+    ],
+  },
+  priroda: {
+    num: '02', title: 'Priroda', sub: 'Životinje & detalji', cover: 'zirafa', coverPos: '50% 30%',
+    intro: 'Životinje, pejzaži i sitni detalji koje lako previdimo. Svetlo koje traje samo trenutak.',
+    note: 'Priroda uvek zna kad da pozira. ♡',
+    photos: [
+      ['zirafa', 'Žirafa fotografisana odozdo na plavom nebu'], ['pr-tigar', 'Mladunče tigra leži u travi i gleda u objektiv', '50% 45%'],
+      ['pr-patke', 'Bele patke plivaju u tirkiznoj vodi', '50% 50%'], ['pr-lemur', 'Prstenastorepi lemur sedi na drvenoj platformi', '50% 50%'],
+      ['pr-paun', 'Paun odmara u travi pored klupe', '50% 50%'], ['pr-kornjaca', 'Kornjača izbliza na zemlji', '50% 55%'],
+      ['pr-haski', 'Oko haskija izbliza kroz rešetke', '60% 50%'], ['pr-lisce', 'Jesenje hrastovo lišće u kontra svetlu', '50% 40%'],
+      ['pr-crkva-jesen', 'Gomila jesenjeg lišća ispred srednjovekovne crkve', '50% 60%'], ['pr-lane', 'Lane leži na suncu pored ograde', '45% 50%'], ['pr-zirafa-2', 'Žirafa se radoznalo naginje preko ograde pod plavim nebom', '40% 35%'],
+      ['nis-disanje', 'Drvo sa žutom tablom u parku u Nišu'],
+    ],
+  },
+  putovanja: {
+    num: '03', title: 'Putovanja', sub: 'Nove destinacije', cover: 'avion', coverPos: '50% 55%',
+    intro: 'Mesta koja pamtimo po ljudima, mirisima i svetlu. Od Niša do Sicilije, kroz moj objektiv.',
+    note: 'Svako putovanje počinje jednim kadrom. ♡',
+    photos: [
+      ['avion', 'Krilo aviona na pisti u sumrak'], ['pt-galata', 'Galata kula u Istanbulu sa pticama u letu', '50% 40%'],
+      ['pt-tramvaj', 'Crveni tramvaj Taksim–Tünel na ulici Istiklal', '50% 60%'], ['pt-bosfor', 'Pogled na Galatu i brodove na Bosforu', '50% 50%'],
+      ['pt-dzamija', 'Detalj fasade džamije Ortaköy pod oblacima', '60% 50%'], ['pt-kuce', 'Šarene kuće i žuti taksi u Istanbulu', '50% 60%'],
+      ['pt-sarene-kuce', 'Crvena, žuta, plava i roze fasada u Istanbulu', '50% 55%'], ['pt-palermo', 'Barokna fasada Quattro Canti u Palermu', '50% 50%'],
+      ['koreni', 'Čaša vina ispred srednjovekovne crkve'], ['nis', 'Mačka na kaldrmi u starom delu grada'],
+      ['pt-pista', 'Putnici se ukrcavaju u avion na pisti u sumrak', '50% 50%'], ['pt-zgrada', 'Ugaona zgrada u Istanbulu pod vedrim nebom', '55% 50%'],
+    ],
+  },
+  dogadjaji: {
+    num: '04', title: 'Događaji', sub: 'Energija & trenuci', cover: 'dogadjaj', coverPos: '50% 35%',
+    intro: 'Koncerti, predstave, proslave i venčanja. Energija večeri, sačuvana zauvek.',
+    note: 'Muzika prođe, fotografija ostaje. ♡',
+    photos: [
+      ['dogadjaj', 'Gitarista i publika pod ljubičastim svetlom na koncertu'], ['dg-kabare', 'Kabare igračica sa šeširom namiguje publici na sceni', '50% 30%'],
+      ['dg-torta', 'Slavljenica duva svećice na zlatnoj torti za 18. rođendan', '50% 45%'], ['p-cvet', 'Muškarac u odelu drži ružu sa trakama'],
+      ['dg-rodjendan', 'Proslava 18. rođendana sa šampanjcem i zlatnim balonima', '50% 45%'],
+      ['dg-trombon', 'Trombonista sa marakasom se smeje na bini Nišvila', '50% 25%'], ['dg-koza', 'Pevač u kožnom kostimu zabacuje glavu pod crvenim svetlom', '55% 35%'],
+      ['dg-tamburin', 'Pevač sa tamburinom sedi na barskoj stolici na koncertu', '50% 35%'], ['dg-megafon', 'Glumica u roze fantomki viče u megafon na sceni', '68% 50%'],
+      ['dg-auto', 'Crni BMW sa upaljenim angel eyes farovima u sumrak', '40% 55%'], ['dg-drift', 'Dva automobila u driftu oko gume na auto šou programu', '55% 55%'],
+      ['p-aplauz', 'Ruke koje aplaudiraju pod toplim svetlima'],
+    ],
+  },
+};
+const ORDER = ['ljudi', 'priroda', 'putovanja', 'dogadjaji'];
+const readKey = () => {
+  const k = new URLSearchParams(window.location.search).get('k') || (window.location.hash || '').replace('#', '');
+  return ORDER.includes(k) ? k : 'ljudi';
+};
+
+class Component extends DCLogic {
+  state = { k: readKey(), lb: -1, w: window.innerWidth };
+
+  componentDidMount() {
+    this.onKey = e => {
+      if (this.state.lb < 0) return;
+      if (e.key === 'Escape') this.setState({ lb: -1 });
+      if (e.key === 'ArrowRight') this.step(1);
+      if (e.key === 'ArrowLeft') this.step(-1);
+    };
+    this.onResize = () => this.setState({ w: window.innerWidth });
+    this.onPop = () => this.setState({ k: readKey(), lb: -1 });
+    window.addEventListener('keydown', this.onKey);
+    window.addEventListener('resize', this.onResize);
+    window.addEventListener('popstate', this.onPop);
+    this.setTitle();
+  }
+  componentDidUpdate(pp, ps) { if (ps.k !== this.state.k) this.setTitle(); }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('popstate', this.onPop);
+  }
+  setTitle() { document.title = 'Obscura studio'; }
+
+  step(d) { const n = CATS[this.state.k].photos.length; this.setState(s => ({ lb: (s.lb + d + n) % n })); }
+
+  go(k) {
+    return e => {
+      e.preventDefault();
+      try { history.pushState(null, '', `?k=${k}`); } catch (err) {}
+      this.setState({ k, lb: -1 });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+  }
+
+  renderVals() {
+    const { k, lb, w } = this.state;
+    const c = CATS[k];
+    const img = n => `images/${n}.jpg`;
+    const cat = { ...c, cover: img(c.cover), coverAlt: c.photos[0][1] };
+    const photos = c.photos.map(([n, alt, pos], i) => ({ src: img(n), alt, pos: pos || '50% 30%', open: () => this.setState({ lb: i }) }));
+    const tabs = ORDER.map(key => {
+      const on = key === k;
+      return { num: CATS[key].num, title: CATS[key].title, count: CATS[key].photos.length, href: `?k=${key}`, go: this.go(key),
+        current: on ? 'page' : 'false', line: on ? '#7a5f9e' : 'transparent', color: on ? '#7a5f9e' : '#2d2340' };
+    });
+    const nk = ORDER[(ORDER.indexOf(k) + 1) % ORDER.length], nc = CATS[nk];
+    const next = { num: nc.num, title: nc.title, cover: img(nc.cover), coverPos: nc.coverPos, href: `?k=${nk}`, go: this.go(nk) };
+    const cur = lb >= 0 ? c.photos[lb] : null;
+    const stop = fn => e => { e.stopPropagation(); fn(); };
+    return {
+      cat, photos, tabs, next,
+      cols: `repeat(${w < 640 ? 2 : w < 900 ? 3 : 4},minmax(0,1fr))`,
+      wide: w >= 700,
+      showNote: this.props.showNotes ?? true,
+      lbOpen: lb >= 0,
+      lb: cur ? { src: img(cur[0]), alt: cur[1], pos: `${lb + 1} / ${c.photos.length}` } : { src: '', alt: '', pos: '' },
+      prev: stop(() => this.step(-1)),
+      nextImg: stop(() => this.step(1)),
+      close: e => { e.stopPropagation(); this.setState({ lb: -1 }); },
+    };
+  }
+}
+</script>
+</body>
+</html>
